@@ -12,7 +12,7 @@ class CalculatorTest extends TestCase {
     public function testSomar() {
         $a = 5;
         $b = 9;
-        $esperado = 14; // corrigido
+        $esperado = 14; 
 
         $resultado = $this->calculator->somar($a, $b);
         $this->assertEquals($esperado, $resultado);
@@ -30,7 +30,7 @@ class CalculatorTest extends TestCase {
     public function testMultiplicar() {
         $a = 5;
         $b = 7;
-        $esperado = 35; // corrigido
+        $esperado = 35; 
 
         $resultado = $this->calculator->multiplicar($a, $b);
         $this->assertEquals($esperado, $resultado);
