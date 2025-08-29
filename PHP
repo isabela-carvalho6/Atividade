@@ -1,0 +1,190 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use App\Calculator;
+
+class CalculatorTest extends TestCase {
+    private $calculator;
+
+    protected function setUp(): void {
+        $this->calculator = new Calculator();
+    }
+
+    public function testSomar() {
+        $a = 5;
+        $b = 9;
+        $esperado = 14; // corrigido
+
+        $resultado = $this->calculator->somar($a, $b);
+        $this->assertEquals($esperado, $resultado);
+    }
+
+    public function testSubtrair() {
+        $a = 10;
+        $b = 4;
+        $esperado = 6;
+
+        $resultado = $this->calculator->subtrair($a, $b);
+        $this->assertEquals($esperado, $resultado);
+    }
+
+    public function testMultiplicar() {
+        $a = 5;
+        $b = 7;
+        $esperado = 35; // corrigido
+
+        $resultado = $this->calculator->multiplicar($a, $b);
+        $this->assertEquals($esperado, $resultado);
+
+        $this->assertEquals(0, $this->calculator->multiplicar(5, 0));
+        $this->assertEquals(0, $this->calculator->multiplicar(0, 7));
+    }
+
+    public function testDividir() {
+        $a = 10;
+        $b = 2;
+        $esperado = 5;
+
+        $resultado = $this->calculator->dividir($a, $b);
+        $this->assertEquals($esperado, $resultado);
+    }
+
+    public function testDividirDecimal() {
+        $a = 5;
+        $b = 2;
+        $esperado = 2.5;
+
+        $resultado = $this->calculator->dividir($a, $b);
+        $this->assertEquals($esperado, $resultado);
+    }
+
+    public function testDividirPorZero() {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->calculator->dividir(10, 0);
+    }
+
+    public function testSomarPositivos() {
+        $this->assertEquals(8, $this->calculator->somar(5, 3));
+    }
+
+    public function testSomarNegativos() {
+        $this->assertEquals(-8, $this->calculator->somar(-5, -3));
+    }
+
+    public function testSomarComZero() {
+        $this->assertEquals(5, $this->calculator->somar(5, 0));
+    }
+
+    public function testSubtrairSimples() {
+        $this->assertEquals(6, $this->calculator->subtrair(10, 4));
+    }
+
+    public function testSubtrairNegativo() {
+        $this->assertEquals(-2, $this->calculator->subtrair(3, 5));
+    }
+
+    public function testMultiplicarPositivos() {
+        $this->assertEquals(42, $this->calculator->multiplicar(6, 7));
+    }
+
+    public function testMultiplicarPorZero() {
+        $this->assertEquals(0, $this->calculator->multiplicar(5, 0));
+        $this->assertEquals(0, $this->calculator->multiplicar(0, 7));
+    }
+
+    public function testMultiplicarComNegativo() {
+        $this->assertEquals(-15, $this->calculator->multiplicar(-5, 3));
+    }
+
+    public function testDividirExata() {
+        $this->assertEquals(5, $this->calculator->dividir(10, 2));
+    }
+
+    public function testPotenciaPositiva() {
+        $this->assertEquals(8, $this->calculator->potencia(2, 3));
+    }
+
+    public function testPotenciaExpoenteZero() {
+        $this->assertEquals(1, $this->calculator->potencia(5, 0));
+    }
+
+    public function testPotenciaNegativa() {
+        $this->assertEquals(0.25, $this->calculator->potencia(2, -2));
+    }
+
+    public function testRaizQuadradaPositiva() {
+        $this->assertEquals(3, $this->calculator->raizQuadrada(9));
+    }
+
+    public function testRaizQuadradaDeZero() {
+        $this->assertEquals(0, $this->calculator->raizQuadrada(0));
+    }
+
+    public function testRaizQuadradaDeNegativo() {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->calculator->raizQuadrada(-4);
+    }
+
+    public function testFatorialDeZero() {
+        $this->assertEquals(1, $this->calculator->fatorial(0));
+    }
+
+    public function testFatorialDeUm() {
+        $this->assertEquals(1, $this->calculator->fatorial(1));
+    }
+
+    public function testFatorialMaior() {
+        $this->assertEquals(24, $this->calculator->fatorial(4));
+    }
+
+    public function testFatorialNegativo() {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->calculator->fatorial(-5);
+    }
+
+    public function testNumeroPar() {
+        $this->assertTrue($this->calculator->ehPar(4));
+    }
+
+    public function testNumeroImpar() {
+        $this->assertFalse($this->calculator->ehPar(3));
+    }
+
+    public function testZeroEhPar() {
+        $this->assertTrue($this->calculator->ehPar(0));
+    }
+
+    public function testNumeroNegativoParEImpar() {
+        $this->assertTrue($this->calculator->ehPar(-6));
+        $this->assertFalse($this->calculator->ehPar(-7));
+    }
+
+    public function testMediaVariosNumeros() {
+        $this->assertEquals(3, $this->calculator->media([1, 2, 3, 4, 5]));
+    }
+
+    public function testMediaUmNumero() {
+        $this->assertEquals(10, $this->calculator->media([10]));
+    }
+
+    public function testMediaArrayVazio() {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->calculator->media([]);
+    }
+
+    public function testMaiorNumeroPositivos() {
+        $this->assertEquals(9, $this->calculator->maiorNumero([1, 5, 9, 2]));
+    }
+
+    public function testMaiorNumeroNegativos() {
+        $this->assertEquals(-1, $this->calculator->maiorNumero([-10, -5, -1, -20]));
+    }
+
+    public function testMaiorNumeroMisto() {
+        $this->assertEquals(100, $this->calculator->maiorNumero([-5, 0, 100, -50]));
+    }
+
+    public function testMaiorNumeroArrayVazio() {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->calculator->maiorNumero([]);
+    }
+}
